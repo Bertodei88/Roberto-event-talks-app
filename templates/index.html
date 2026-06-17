@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Browse the latest BigQuery release notes from Google Cloud, and share updates on Twitter/X." />
+  <title>BigQuery Release Notes</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>" />
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">BQ</div>
+        <div class="logo-text">Release <span>Notes</span></div>
+      </div>
+
+      <button id="btn-refresh" class="btn-refresh" aria-label="Refresh release notes">
+        <span class="icon">
+          <!-- Refresh SVG icon -->
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+        </span>
+        <span class="label">Refresh</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Main ── -->
+  <main class="main">
+    <div class="status-bar">
+      <span id="status-count" class="count"></span>
+      <span id="status-time"></span>
+    </div>
+
+    <div id="releases-list" class="releases-list">
+      <!-- Cards are rendered here by JS -->
+    </div>
+  </main>
+
+  <!-- ── Tweet Action Bar (fixed bottom) ── -->
+  <div id="tweet-bar" class="tweet-bar">
+    <button id="btn-deselect" class="btn-deselect" aria-label="Deselect">✕</button>
+    <span id="tweet-bar-text" class="tweet-bar-text"></span>
+    <button id="btn-tweet" class="btn-tweet">
+      <!-- X / Twitter icon -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+      Post on X
+    </button>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

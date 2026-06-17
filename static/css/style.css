@@ -1,0 +1,578 @@
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ── CSS Custom Properties ── */
+:root {
+  --bg-primary:    #0a0e1a;
+  --bg-secondary:  #111827;
+  --bg-card:       #1a2035;
+  --bg-card-hover: #1f2847;
+  --bg-glass:      rgba(26, 32, 53, 0.65);
+
+  --accent:        #4f8ff7;
+  --accent-glow:   rgba(79, 143, 247, 0.25);
+  --accent-hover:  #6ba3ff;
+  --tweet-blue:    #1d9bf0;
+  --tweet-hover:   #1a8cd8;
+
+  --text-primary:  #e8ecf4;
+  --text-secondary:#94a3b8;
+  --text-muted:    #64748b;
+
+  --border:        rgba(148, 163, 184, 0.10);
+  --border-hover:  rgba(79, 143, 247, 0.30);
+
+  --radius:        14px;
+  --radius-sm:     10px;
+  --transition:    0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Animated background mesh ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(79,143,247,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(139,92,246,0.10) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Header ── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  background: rgba(10, 14, 26, 0.75);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+}
+
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(79,143,247,0.30);
+}
+
+.logo-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.logo-text span {
+  color: var(--accent);
+}
+
+/* ── Refresh Button ── */
+.btn-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-refresh::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.btn-refresh:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 24px var(--accent-glow);
+  transform: translateY(-1px);
+}
+
+.btn-refresh:hover::before {
+  opacity: 0.15;
+}
+
+.btn-refresh:active {
+  transform: translateY(0);
+}
+
+.btn-refresh .icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  transition: transform 0.5s ease;
+}
+
+.btn-refresh.loading .icon {
+  animation: spin 0.8s linear infinite;
+}
+
+.btn-refresh .label {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Main Content ── */
+.main {
+  position: relative;
+  z-index: 1;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ── Status bar ── */
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.status-bar .count {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* ── Release Card ── */
+.releases-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.release-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: all var(--transition);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.release-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--accent), #8b5cf6);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.release-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+  transform: translateX(4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 0 0 1px var(--border-hover);
+}
+
+.release-card:hover::before {
+  opacity: 1;
+}
+
+.release-card.selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 8px 32px var(--accent-glow);
+}
+
+.release-card.selected::before {
+  opacity: 1;
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.card-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.card-title a:hover {
+  color: var(--accent-hover);
+}
+
+.card-date {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: rgba(148,163,184,0.08);
+  padding: 4px 12px;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+
+.card-content {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-height: 120px;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-content::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(transparent, var(--bg-card));
+  pointer-events: none;
+}
+
+.release-card:hover .card-content::after {
+  background: linear-gradient(transparent, var(--bg-card-hover));
+}
+
+.release-card.selected .card-content::after {
+  background: linear-gradient(transparent, var(--bg-card));
+}
+
+/* Clean up HTML content inside cards */
+.card-content h2,
+.card-content h3,
+.card-content h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0.6em 0 0.3em;
+  color: var(--text-primary);
+}
+
+.card-content p {
+  margin: 0.4em 0;
+}
+
+.card-content ul,
+.card-content ol {
+  padding-left: 1.2em;
+  margin: 0.4em 0;
+}
+
+.card-content li {
+  margin: 0.2em 0;
+}
+
+.card-content a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.card-content a:hover {
+  text-decoration: underline;
+}
+
+.card-content code {
+  background: rgba(148,163,184,0.10);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+/* ── Tweet Action Bar ── */
+.tweet-bar {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 28px;
+  background: rgba(17, 24, 39, 0.92);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid var(--border-hover);
+  border-radius: 60px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px var(--accent-glow);
+  transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tweet-bar.visible {
+  bottom: 32px;
+}
+
+.tweet-bar-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-tweet {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 50px;
+  background: var(--tweet-blue);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.btn-tweet:hover {
+  background: var(--tweet-hover);
+  transform: scale(1.04);
+  box-shadow: 0 4px 20px rgba(29,155,240,0.40);
+}
+
+.btn-tweet:active {
+  transform: scale(0.98);
+}
+
+.btn-tweet svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.btn-deselect {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-size: 1.1rem;
+}
+
+.btn-deselect:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: rgba(239,68,68,0.10);
+}
+
+/* ── Loading skeleton ── */
+.skeleton-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+.skeleton-line {
+  height: 14px;
+  border-radius: 6px;
+  background: rgba(148,163,184,0.10);
+  margin-bottom: 10px;
+}
+
+.skeleton-line.w70 { width: 70%; }
+.skeleton-line.w40 { width: 40%; }
+.skeleton-line.w90 { width: 90%; }
+.skeleton-line.w60 { width: 60%; }
+.skeleton-line.title { height: 18px; margin-bottom: 14px; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+/* ── Error State ── */
+.error-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-muted);
+}
+
+.error-state .error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.error-state p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.error-state .error-detail {
+  font-size: 0.85rem;
+  color: #ef4444;
+  opacity: 0.8;
+}
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* ── Fade-in animation for cards ── */
+.release-card {
+  animation: fadeSlideIn 0.35s ease-out both;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger children */
+.release-card:nth-child(1)  { animation-delay: 0.00s; }
+.release-card:nth-child(2)  { animation-delay: 0.04s; }
+.release-card:nth-child(3)  { animation-delay: 0.08s; }
+.release-card:nth-child(4)  { animation-delay: 0.12s; }
+.release-card:nth-child(5)  { animation-delay: 0.16s; }
+.release-card:nth-child(6)  { animation-delay: 0.20s; }
+.release-card:nth-child(7)  { animation-delay: 0.24s; }
+.release-card:nth-child(8)  { animation-delay: 0.28s; }
+.release-card:nth-child(9)  { animation-delay: 0.32s; }
+.release-card:nth-child(10) { animation-delay: 0.36s; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148,163,184,0.18);
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148,163,184,0.30);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .header { padding: 0 1rem; }
+  .main { padding: 1.25rem; }
+
+  .card-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .card-date {
+    align-self: flex-start;
+  }
+
+  .tweet-bar {
+    left: 16px;
+    right: 16px;
+    transform: none;
+    border-radius: 20px;
+    padding: 14px 20px;
+  }
+
+  .tweet-bar.visible {
+    bottom: 16px;
+  }
+
+  .tweet-bar-text {
+    max-width: 140px;
+  }
+}
